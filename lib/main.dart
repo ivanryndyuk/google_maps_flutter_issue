@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -44,16 +46,17 @@ class _MyHomePageState extends State<MyHomePage> {
             if (_mapController == null) {
               return;
             }
+            final devicePixelRatio = Platform.isAndroid
+                ? MediaQuery.of(context).devicePixelRatio
+                : 1.0;
             _mapController.getLatLng(
               ScreenCoordinate(
-                // TODO: Comment these two lines
+                // TODO: Comment these two lines for workaround
                 x: context.size.width ~/ 2.0,
                 y: context.size.height ~/ 2.0,
-                // TODO: Uncomment these four lines
-//                x: context.size.width * MediaQuery.of(context)
-//                    .devicePixelRatio ~/ 2.0,
-//                y: context.size.height * MediaQuery.of(context)
-//                    .devicePixelRatio ~/ 2.0,
+                // TODO: Uncomment these two lines for workaround
+//                x: context.size.width * devicePixelRatio ~/ 2.0,
+//                y: context.size.height * devicePixelRatio ~/ 2.0,
               ),
             ).then((coordinates) {
               print("center position: " + coordinates.toString());
